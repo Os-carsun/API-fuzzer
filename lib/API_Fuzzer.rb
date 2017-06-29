@@ -29,7 +29,18 @@ module API_Fuzzer
     vulnerabilities << API_Fuzzer::CsrfCheck.scan(options)
     vulnerabilities << API_Fuzzer::PrivilegeEscalationCheck.scan(options)
     API_Fuzzer::XxeCheck.scan(options)
-    vulnerabilities.uniq.flatten
+
+    print vulnerabilities.uniq.flatten
+    vulnerabilities.uniq.flatten.each { |x| puts "=====",">>> #{x.class.name} <<<"
+		if x.class.name == "API_Fuzzer::Vulnerability"
+			puts "dec:#{x.description}", "parame:#{x.parameter}", "value:#{x.value}", "type:#{x.type}"
+			puts x.value.class
+			puts "====="
+		elsif x.class.name == "API_Fuzzer::Error"
+			puts "dec:#{x.description}", "status:#{x.status}","value#{x.value}"
+			puts "====="
+		end
+    }
   end
 
   def self.static_analysis(options = {})

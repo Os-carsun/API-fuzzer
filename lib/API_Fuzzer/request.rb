@@ -54,7 +54,7 @@ module API_Fuzzer
       
       ctx = OpenSSL::SSL::SSLContext.new
       ctx.verify_mode = OpenSSL::SSL::VERIFY_NONE
-
+      puts "<---------->", @params, "<--------->"
       if @json && !method_get?
         { 'json' => @params, 'ssl_context' => ctx }
       elsif method_get?
